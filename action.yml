@@ -1,0 +1,46 @@
+name: "Alesia Discord Deploy Notify"
+description: "Post a beautifully embedded Discord message with the deploy status of an Alesia workflow, including error logs on failure."
+author: "RD-Agency / Alesia"
+branding:
+  icon: "activity"
+  color: "purple"
+
+inputs:
+  webhook:
+    description: "Discord webhook URL (store as a secret)."
+    required: true
+  status:
+    description: "Job status — typically ${{ job.status }}. One of success | failure | cancelled."
+    required: true
+  title:
+    description: "Optional title override. Defaults to a context-aware title."
+    required: false
+    default: ""
+  github-token:
+    description: "Token used to fetch failure logs. Defaults to github.token."
+    required: false
+    default: ${{ github.token }}
+  include-logs:
+    description: "When 'true' and status=failure, append last lines of the failed job logs."
+    required: false
+    default: "true"
+  log-lines:
+    description: "Max lines of failure log to include (default 25)."
+    required: false
+    default: "25"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Post Discord embed
+      shell: bash
+      env:
+        INPUT_WEBHOOK: ${{ inputs.webhook }}
+        INPUT_STATUS: ${{ inputs.status }}
+        INPUT_TITLE: ${{ inputs.title }}
+        INPUT_INCLUDE_LOGS: ${{ inputs.include-logs }}
+        INPUT_LOG_LINES: ${{ inputs.log-lines }}
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        set -u
+        "${GITHUB_ACTION_PATH}/notify.sh"
