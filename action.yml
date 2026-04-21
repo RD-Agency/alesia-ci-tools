@@ -10,16 +10,16 @@ inputs:
     description: "Discord webhook URL (store as a secret)."
     required: true
   status:
-    description: "Job status — typically ${{ job.status }}. One of success | failure | cancelled."
+    description: "Job status string. Pass the job status expression from the caller. One of success | failure | cancelled."
     required: true
   title:
     description: "Optional title override. Defaults to a context-aware title."
     required: false
     default: ""
   github-token:
-    description: "Token used to fetch failure logs. Defaults to github.token."
+    description: "Token used to fetch failure logs. Pass github.token from the caller."
     required: false
-    default: ${{ github.token }}
+    default: ""
   include-logs:
     description: "When 'true' and status=failure, append last lines of the failed job logs."
     required: false
