@@ -1,7 +1,7 @@
 # Reusable workflow: Claude reviews every pull request and, when it finds
 # nothing blocking, merges it once every other check on the PR is green.
 #
-# Called from each repository by .github/workflows/claude-review.yml
+# Called from each repository by .github/workflows/claude-auto-review.yml
 # (see README → "Claude PR review").
 name: Claude PR review (reusable)
 

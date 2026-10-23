@@ -1,0 +1,27 @@
+# Claude relit chaque pull request et la fusionne automatiquement
+# quand il ne trouve rien de bloquant et que tous les autres checks sont verts.
+# La logique est centralisée dans RD-Agency/alesia-ci-tools.
+name: Claude review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  checks: read
+  statuses: read
+  actions: read
+  id-token: write
+
+jobs:
+  claude:
+    uses: RD-Agency/alesia-ci-tools/.github/workflows/claude-pr-review.yml@main
+    with:
+      auto_merge: true
+      merge_method: squash
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+      PR_MERGE_TOKEN: ${{ secrets.PR_MERGE_TOKEN }}

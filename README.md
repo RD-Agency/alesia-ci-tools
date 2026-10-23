@@ -46,7 +46,7 @@ Reusable workflow (`.github/workflows/claude-pr-review.yml`) : Claude relit chaq
 
 ## Installer sur un dépôt
 
-1. Copier [`templates/claude-review.yml`](templates/claude-review.yml) dans `.github/workflows/claude-review.yml`.
+1. Copier [`templates/claude-auto-review.yml`](templates/claude-auto-review.yml) dans `.github/workflows/claude-auto-review.yml`.
 2. Ajouter le secret `CLAUDE_CODE_OAUTH_TOKEN` (généré avec `claude setup-token`).
    Pour RD-Agency, un secret d'organisation suffit.
 3. Optionnel : secret `PR_MERGE_TOKEN` (PAT fine-grained, *Contents* + *Pull requests* en écriture). Sans lui, le merge est fait par `GITHUB_TOKEN`, et GitHub **ne déclenche pas** les workflows `on: push` (déploiements) après le merge.
